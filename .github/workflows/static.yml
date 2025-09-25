@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Виртуальная примерочная</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: space-around;
+      padding: 20px;
+    }
+    .model {
+      position: relative;
+      width: 300px;
+      height: 700px;
+      overflow: hidden;
+    }
+    .model img {
+      position: absolute;
+      height: auto;
+      pointer-events: none;
+    }
+    .base {
+      z-index: 1;
+      width: 100%;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .cap {
+      top: 0;
+      z-index: 3;
+      width: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .jacket {
+      top: 90px;
+      z-index: 4;
+      width: 220px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .tshirt {
+      top: 90px;
+      z-index: 3;
+      width: 200px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .pants {
+      top: 250px;
+      z-index: 2;
+      width: 250px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .shoes {
+      bottom: 50px;
+      z-index: 2;
+      width: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+    }
+    .shoes img {
+      width: 45px;
+      position: relative;
+    }
+    .shoes .left-shoe {
+      transform: scaleX(-1);
+    }
+    .shoes .right-shoe {
+      transform: none;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .controls a {
+      display: inline-block;
+      margin: 4px 0;
+      text-decoration: none;
+      color: #fff;
+      background: #0077cc;
+      padding: 6px 10px;
+      border-radius: 5px;
+    }
+    .controls a:hover {
+      background: #005fa3;
+    }
+    .controls a.remove {
+      background: #cc0000; /* Красный для кнопки "Убрать" */
+    }
+    .controls a.remove:hover {
+      background: #a30000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Манекен -->
+  <div class="model" id="model">
+    <!-- Силуэт человека -->
+    <img src="https://shablon.klev.club/uploads/posts/2024-09/shablon-klev-club-cvt9-p-shabloni-maket-cheloveka-2.jpg" alt="Силуэт" class="base">
+
+    <!-- Одежда -->
+    <img id="cap" class="cap">
+    <img id="jacket" class="jacket">
+    <img id="tshirt" class="tshirt">
+    <img id="pants" class="pants">
+    <div class="shoes" id="shoes">
+      <img id="left-shoe" class="left-shoe">
+      <img id="right-shoe" class="right-shoe">
+    </div>
+  </div>
+
+  <!-- Панель выбора -->
+  <div class="controls">
+    <div>
+      <h3>Кепки</h3>
+      <a href="#" onclick="wear('cap','https://cdn-icons-png.flaticon.com/512/10773/10773001.png')">Кепка 1 (черная)</a><br>
+      <a href="#" onclick="wear('cap','https://cdn-icons-png.flaticon.com/512/10773/10773055.png')">Кепка 2 (красная)</a><br>
+      <a href="#" onclick="removeItem('cap')" class="remove">Убрать кепку</a>
+    </div>
+    <div>
+      <h3>Куртки</h3>
+      <a href="#" onclick="wear('jacket','https://cdn-icons-png.flaticon.com/128/1959/1959940.png')">Куртка 1 (зеленая)</a><br>
+      <a href="#" onclick="wear('jacket','https://cdn-icons-png.flaticon.com/128/1959/1959883.png')">Куртка 2 (синяя)</a><br>
+      <a href="#" onclick="removeItem('jacket')" class="remove">Убрать куртку</a>
+    </div>
+    <div>
+      <h3>Футболки</h3>
+      <a href="#" onclick="wear('tshirt','https://cdn-icons-png.flaticon.com/512/13423/13423899.png')">Футболка 1 (красная)</a><br>
+      <a href="#" onclick="wear('tshirt','https://cdn-icons-png.flaticon.com/512/3345/3345378.png')">Футболка 2 (синяя)</a><br>
+      <a href="#" onclick="removeItem('tshirt')" class="remove">Убрать футболку</a>
+    </div>
+    <div>
+      <h3>Низ</h3>
+      <a href="#" onclick="wear('pants','https://cdn-icons-png.flaticon.com/512/5571/5571458.png')">Штаны 1 (серые)</a><br>
+      <a href="#" onclick="wear('pants','https://cdn-icons-png.flaticon.com/512/5571/5571282.png')">Штаны 2 (черные)</a><br>
+      <a href="#" onclick="wear('pants','https://cdn-icons-png.flaticon.com/512/5571/5571521.png')">Шорты (оранжевые)</a><br>
+      <a href="#" onclick="removeItem('pants')" class="remove">Убрать штаны</a>
+    </div>
+<!--    <div>-->
+<!--      <h3>Обувь</h3>-->
+<!--      <a href="#" onclick="wearShoes('https://cdn-icons-png.flaticon.com/512/1785/1785348.png')">Кроссовки 1 (серые)</a><br>-->
+<!--      <a href="#" onclick="wearShoes('https://cdn-icons-png.flaticon.com/512/14041/14041387.png')">Кроссовки 2 (фиолетовые)</a><br>-->
+<!--      <a href="#" onclick="removeItem('shoes')" class="remove">Убрать обувь</a>-->
+<!--    </div>-->
+<!--    <a href="#" onclick="saveLook()">💾 Сохранить образ</a>-->
+  </div>
+
+  <script>
+    function wear(part, imgUrl) {
+      document.getElementById(part).src = imgUrl;
+    }
+
+    function wearShoes(imgUrl) {
+      const leftShoe = document.getElementById('left-shoe');
+      const rightShoe = document.getElementById('right-shoe');
+      leftShoe.src = imgUrl;
+      rightShoe.src = imgUrl;
+      leftShoe.onerror = () => console.error('Ошибка загрузки изображения обуви: ' + imgUrl);
+      rightShoe.onerror = () => console.error('Ошибка загрузки изображения обуви: ' + imgUrl);
+    }
+
+    function removeItem(part) {
+      if (part === 'shoes') {
+        document.getElementById('left-shoe').src = '';
+        document.getElementById('right-shoe').src = '';
+      } else {
+        document.getElementById(part).src = '';
+      }
+    }
+
+    function saveLook() {
+      const model = document.getElementById("model");
+      html2canvas(model).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "my-look.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+
+  <!-- Библиотека для сохранения картинки -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</body>
+</html>
